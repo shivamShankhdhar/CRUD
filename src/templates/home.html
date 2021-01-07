@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>CRUD Application!</title>
+  </head>
+  <style type="text/css">
+  	*,html,body{
+  		margin: 0;
+  		padding: 0;
+  	}
+  	.col{
+  		background: #f2f2f2;
+  		/*color: #000;*/
+  	}
+  	.text-decoration{
+  		text-decoration: line-through;
+  	}
+  	.total-task{
+  		height: 40px;
+  		line-height: 40px;
+  		font-weight: bold;
+  		letter-spacing: 3px;
+  	}
+  </style>
+  <body>
+	{% include 'navbar.html' %}
+	{% if messages %}
+		{% for message in messages %}
+			<div class="alert alert-{{ message.tags }} text-center " role="alert">
+				<strong> {{ message }}</strong>
+
+			</div>
+		{% endfor %}
+	{% endif %}
+
+	<div class="container">
+		<div class="row mt-3 px-3 justify-content-center">
+			<div class="col col-10 bg-dark text-white total-task">
+   					Total Task - {{ task_count }}
+			</div>
+		</div>
+   			<div class="row  justify-content-center">
+
+   				<div class="col col-10 ">
+
+   					
+   					<table class="table table-striped table-dark">
+					    <thead>
+					      <tr>
+					        <!-- <th scope="col">#</th> -->
+					        <th scope="col">Task</th>
+					        <!-- <th scope="col">Cross Off</th> -->
+					        <th scope="col">Actions</th>
+					      </tr>
+					    </thead>
+					
+					    <tbody>
+					    	{% for task in task reversed %}
+					      <tr >
+					         {% if task.is_active %}
+					        <td>{{ task.name }} </td>
+					       
+					        	<td> <a href="{% url 'src:cross-off' task.id %}" class="btn btn-sm btn-primary">Cross Off</a> </td>
+					        {% else %}
+					        <td class="text-decoration">{{ task.name }} </td>
+
+					        	<td> <a href="{% url 'src:un-cross' task.id %}" class="btn btn-sm btn-primary ">Un-Cross</a> </td>
+					        {% endif %}
+					        <td> 
+					        	<a href="{% url 'src:what' task.id %}" class="btn btn-sm btn-danger" >Delete Task</a> 
+					        </td>
+					      </tr>
+					      {% endfor %}
+					    </tbody>
+   				</div>
+   			</div>
+   		</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
